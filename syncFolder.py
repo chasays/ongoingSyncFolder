@@ -12,11 +12,9 @@ LOG_FILE = r'D:\Package\monitor.log'
 
 handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes=1024 * 1024, backupCount=5)  # 实例化handler
 fmt = '%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s'
-
 formatter = logging.Formatter(fmt)  # 实例化formatter
 handler.setFormatter(formatter)  # 为handler添加formatter
-
-logger = logging.getLogger('tst')  # 获取名为tst的logger
+logger = logging.getLogger('monitor')  # 获取名为的logger
 logger.addHandler(handler)  # 为logger添加handler
 logger.setLevel(logging.DEBUG)
 # #检测当前目录下所有文件删除、更新、修改等变化。更新日志输出到桌面。
@@ -86,8 +84,9 @@ def sync():
     for action, file in monitorStatus():
         full_filename = os.path.join(path_to_watch, file)
         logging.info('{}, {}'.format(full_filename, ACTIONS.get(action, "Unknown")))
-        cmd = r'xcopy {} "D:\Package\{}" /s/h/e/k/f/c'.format(full_filename, full_filename[-8:])
+        cmd = r'xcopy {} "D:\Package\" /s/h/e/k/f/c/y'.format(full_filename, full_filename[-8:])
         runXcopy = os.system(cmd)
+        logging.debug(runXcopy)
         # with open('%UserProfile%\\fileupdate.txt', 'a') as f:
         #     f.write(','.join(['%s' % full_filename, '%s\n' % ACTIONS.get(action, "Unknown")]))
         #     f.close()
